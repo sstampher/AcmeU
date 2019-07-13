@@ -8,9 +8,22 @@ class Students extends Component {
     componentDidMount(){
         this.props.fetchStudents(); 
     }
+
+    componentDidUpdate(prevProps) {
+        console.log('prevProps', prevProps);
+        console.log('currentProps', this.props);
+
+        if (this.props.students === prevProps.students) {
+            console.log('in the componentDidUpdate if statement');
+            this.props.fetchStudents(); 
+        }
+        else{
+            console.log('not in if statement');  
+        }
+      }
     
     render(){
-        console.log('props sent to School component', this.props.students);
+        console.log('props sent to School component', this.props);
         
         return <div>
                     < AddStudent />

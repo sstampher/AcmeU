@@ -17,8 +17,8 @@ class Nav extends Component {
             <div>
                     < Link to = '/schools'> Schools ({this.props.schools.length})</Link>
                     < Link to = '/students'> Students ({this.props.students.length})</Link>
-                    < Link to = '/most_popular'> Most Popular ({this.props.schools.length})</Link>
-                    < Link to = '/top_school'> Top School ({this.props.schools.length})</Link>
+                    < Link to = '/most_popular'> Most Popular ()</Link>
+                    < Link to = '/top_school'> Top School ()</Link>
             </div>
         )
     }
