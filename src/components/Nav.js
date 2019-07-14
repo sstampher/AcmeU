@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchSchools } from '../store/actions/postActions';
-import { fetchStudents } from '../store/actions/postActions';
+import { fetchSchools } from '../store/actions/actions';
+import { fetchStudents } from '../store/actions/actions';
 
 class Nav extends Component {
     
     componentDidMount(){
-        this.props.fetchSchools(); 
-        this.props.fetchStudents();
+        this.props.fetchData();
     }
     
     render(){
-        console.log('props sent to Nav component', this.props.schools);
+        
         return (
             <div>
                     < Link to = '/schools'> Schools ({this.props.schools.length})</Link>
@@ -26,13 +25,18 @@ class Nav extends Component {
 }
 
 const mapStateToProps = state => ({
-    schools: state.schools.items,
-    students: state.schools.students
+    schools: state.data.schools,
+    students: state.data.students,
+    student: state.data.student
 })
 
-const mapDispatchToProps = dispatch => ({
-    fetchSchools: () => dispatch(fetchSchools()),
-    fetchStudents: () => dispatch(fetchStudents())
-})
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchData: () => {
+            dispatch(fetchSchools()),
+            dispatch(fetchStudents())
+        }
+    }
+}
 
 export default connect( mapStateToProps, mapDispatchToProps )(Nav)

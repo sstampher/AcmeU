@@ -1,45 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStudents } from '../store/actions/postActions';
 import AddStudent from './AddStudent';
 
-class Students extends Component {
-    
-    componentDidMount(){
-        this.props.fetchStudents(); 
-    }
-
-    componentDidUpdate(prevProps) {
-        console.log('prevProps', prevProps);
-        console.log('currentProps', this.props);
-
-        if (this.props.students === prevProps.students) {
-            console.log('in the componentDidUpdate if statement');
-            this.props.fetchStudents(); 
-        }
-        else{
-            console.log('not in if statement');  
-        }
-      }
-    
-    render(){
-        console.log('props sent to School component', this.props);
+function Students( props ){
         
         return <div>
                     < AddStudent />
-                    {this.props.students.map( item => <li key={item.id}>{item.name}</li>)}
+                    {props.students.map( item => <li key={item.id}>{item.firstName + ' ' + item.lastName}</li>)}
+                    <h1>{props.student ? props.student.firstName : ''}</h1>
                </div>
-    }
 
 }
 
 const mapStateToProps = state => ({
-    students: state.schools.students
+    students: state.data.students,
+    student: state.data.student
 })
 
-const mapDispatchToProps = dispatch => ({
-    fetchStudents: () => dispatch(fetchStudents())
-})
-
-
-export default connect( mapStateToProps, mapDispatchToProps)(Students)
+export default connect( mapStateToProps )(Students)

@@ -55,11 +55,9 @@ const syncAndSeed = async() => {
     await conn.sync({force: true});
     const schools = ['UCLA', 'Cal Poly', 'Toilet University'];
     await Promise.all(schools.map(item => School.create({name:item})));
-    const students = ['Smooth', 'Mustang', 'Stephanie'];
-    await Promise.all(students.map(item => Student.create({firstName:item})));
+    const students = [{ firstName: 'Smooth', lastName: 'Poopie', gpa: 4.0 }, { firstName: 'Mustang', lastName: 'Sally', gpa: 3.625 }, { firstName: 'Stephanie', lastName: 'Stampher', gpa: 4.0 }];
+    await Promise.all(students.map(item => Student.create({firstName:item.firstName, lastName:item.lastName, gpa:item.gpa})));
 }
-
-//syncAndSeed();
 
 module.exports = {
     syncAndSeed,

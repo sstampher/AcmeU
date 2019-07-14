@@ -2,7 +2,6 @@ import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS } from './types';
 import Axios from 'axios';
 
 export const fetchSchools = () => async dispatch => {
-     console.log('get thunk is working')
         try{
             const api = await Axios.get('/api/schools');
             const response = api.data;
@@ -18,7 +17,6 @@ export const fetchSchools = () => async dispatch => {
 }
 
 export const fetchStudents = () => async dispatch => {
-    console.log('get thunk (students) is working')
        try{
            const api = await Axios.get('/api/students');
            const response = api.data;
@@ -33,15 +31,17 @@ export const fetchStudents = () => async dispatch => {
    
 }
 
+const _createStudent = (student)=> ({
+    type: NEW_STUDENT,
+    payload: student
+  });
+
 export const createStudent = (studentData) => async dispatch => {
-    console.log('post thunk is working')
        try{
            const student = await Axios.post('/api/students', { studentData });
            const response = student.data;
-           dispatch({
-               type: NEW_STUDENT ,
-               payload: response
-           })
+           console.log('response from axios post request', response)
+           dispatch(_createStudent(response))
        }
        catch(err){
            console.log('there was an error');

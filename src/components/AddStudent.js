@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createStudent } from '../store/actions/postActions';
+import { createStudent } from '../store/actions/actions';
 
  class AddStudent extends Component {
 
@@ -57,5 +57,6 @@ import { createStudent } from '../store/actions/postActions';
     }
 
 }
+
 
 export default connect( null, { createStudent } )(AddStudent)
