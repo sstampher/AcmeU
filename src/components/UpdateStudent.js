@@ -7,43 +7,69 @@ import { updateStudent } from '../store/actions/actions';
     constructor(props){
         super(props)
         this.state = {
-            student: ''
+            studentId: '',
+            schoolId: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleSubmit(e){
-        console.log('in the submit')
+        console.log('in the dropdown box submit')
         e.preventDefault();
-        console.log(this.state);
-        this.props.createStudent(this.state);
+        console.log('dropdown box state', this.state);
+        this.props.updateStudent(this.state);
     }
 
     handleChange(e){
         e.preventDefault();
-        console.log(e.target.name);
+        console.log('dropdown box handleSubmit', e.target.name);
         this.setState({
             [e.target.name] : e.target.value
         })
     }
 
     render(){
+
+        console.log('props sent to select box component', this.props.school(this.props.defaultSchoolId))
         
-        return <form onSubmit = {this.handleSubmit}>
-                    <select id={item.id} defaultValue={item.status} onChange={this.handleChange}>
-                            {this.state.categories.map(status => <option value = {status}>{status}</option>)}
+        return <form>
+                    <select>
+                        <option value = 'stupid'>{this.props.school(this.props.defaultSchoolId)}</option>
                     </select>
-                    <button type = 'submit'>Enroll</button>
+
+
                </form>
-    }
+
+
+
+        return <form onSubmit = {this.handleSubmit}>
+                {this.props.schools.map( item => {
+                    <div>
+                        <select id={item.id} defaultValue={item.name} onChange={this.handleChange}>
+                            <option value = 'stupid'>stupid</option>
+                        </select>
+                        <button type = 'submit'>Enroll</button>
+                    </div>
+                } )}  
+               </form>
+                
+        }
 
 }
 
 const mapStateToProps = state => ({
     students: state.data.students,
     schools: state.data.schools,
-    student: state.data.student
+    student: state.data.student,
+    school: function(schoolId){
+        if (schoolId){
+            let targetSchool = state.data.schools.find( item => item.id === schoolId );
+            let name = targetSchool.name;
+            return name;
+        }
+        return 'Not Enrolled';
+    }
 })
 
 
