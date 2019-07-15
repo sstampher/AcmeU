@@ -7,7 +7,6 @@ function Students( props ){
         return <div>
                     < AddStudent />
                     {props.students.map( item => <li key={item.id}>{item.firstName + ' ' + item.lastName}</li>)}
-                    <h1>{props.student ? props.student.firstName : ''}</h1>
                </div>
 
 }

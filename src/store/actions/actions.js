@@ -1,5 +1,10 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS } from './types';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS } from './constants';
 import Axios from 'axios';
+
+const _createStudent = (student)=> ({
+    type: NEW_STUDENT,
+    payload: student
+  });
 
 export const fetchSchools = () => async dispatch => {
         try{
@@ -30,11 +35,6 @@ export const fetchStudents = () => async dispatch => {
        }
    
 }
-
-const _createStudent = (student)=> ({
-    type: NEW_STUDENT,
-    payload: student
-  });
 
 export const createStudent = (studentData) => async dispatch => {
        try{

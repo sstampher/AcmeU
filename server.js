@@ -34,7 +34,10 @@ app.get('/api/students', async (req, res, next) => {
 app.post('/api/students', async (req, res, next) => {
   try{
     const newStudent = await Student.create({
-      firstName: req.body.studentData.firstName
+      firstName: req.body.studentData.firstName,
+      lastName: req.body.studentData.lastName,
+      gpa: req.body.studentData.gpa,
+      email: req.body.studentData.email
     });
     res.json(newStudent);
   }

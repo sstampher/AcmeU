@@ -27,7 +27,8 @@ class Nav extends Component {
 const mapStateToProps = state => ({
     schools: state.data.schools,
     students: state.data.students,
-    student: state.data.student
+    student: state.data.student,
+    mostPopular: state.data.students
 })
 
 const mapDispatchToProps = (dispatch) => {

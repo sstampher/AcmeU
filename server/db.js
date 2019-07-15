@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const conn = new Sequelize (process.env.DATABASE_URL || 'postgres://localhost/universities');
 
-const School = conn.define ('School', {
+const School = conn.define ('school', {
     
     name : {
         type: Sequelize.STRING,
@@ -49,14 +49,14 @@ const Student = conn.define('Student', {
 })
 
 Student.belongsTo(School);
-// School.hasMany(Student, { foreignKey: schoolId });
+School.hasMany(Student);
 
 const syncAndSeed = async() => {
     await conn.sync({force: true});
     const schools = ['UCLA', 'Cal Poly', 'Toilet University'];
-    await Promise.all(schools.map(item => School.create({name:item})));
-    const students = [{ firstName: 'Smooth', lastName: 'Poopie', gpa: 4.0 }, { firstName: 'Mustang', lastName: 'Sally', gpa: 3.625 }, { firstName: 'Stephanie', lastName: 'Stampher', gpa: 4.0 }];
-    await Promise.all(students.map(item => Student.create({firstName:item.firstName, lastName:item.lastName, gpa:item.gpa})));
+    const [ UCLA, CP, TU ] = await Promise.all(schools.map(async item => await School.create({name:item})));
+    const students = [{ firstName: 'Smooth', lastName: 'Poopie', gpa: 4.0, schoolId: UCLA.id }, { firstName: 'Mustang', lastName: 'Sally', gpa: 3.625 }, { firstName: 'Stephanie', lastName: 'Stampher', gpa: 4.0 }];
+    await Promise.all(students.map(item => Student.create(item)));
 }
 
 module.exports = {

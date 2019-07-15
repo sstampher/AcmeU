@@ -1,4 +1,4 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS} from '../actions/types';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS} from '../actions/constants';
 
 const initialState = {
     students: [],
@@ -23,6 +23,7 @@ export default function ( state = initialState, action ) {
             return  {
                 ...state,
                 student: action.payload,
+                students: [...state.students, action.payload]
             }
 
         default:
