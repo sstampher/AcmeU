@@ -1,8 +1,6 @@
-// This reducer combines all of the other reducers
-
 import {combineReducers} from 'redux';
-import postReducer from './reducer';
+import reducer from './reducer';
 
 export default combineReducers({
-  data: postReducer
+  data: reducer
 })

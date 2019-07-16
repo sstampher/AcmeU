@@ -3,7 +3,6 @@ import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STU
 const initialState = {
     students: [],
     schools: [], 
-    student: {} 
 }
 
 export default function ( state = initialState, action ) {
@@ -22,7 +21,6 @@ export default function ( state = initialState, action ) {
         case NEW_STUDENT:
             return  {
                 ...state,
-                student: action.payload,
                 students: [...state.students, action.payload]
             }
         case UPDATE_STUDENT:
@@ -36,7 +34,6 @@ export default function ( state = initialState, action ) {
                 })]
             }
         case DELETE_STUDENT:
-            console.log('in delete student reducer action.payload:', action.payload)
             return {
                 ...state,
                 students: [...state.students.filter(student => student.id !== action.payload)]

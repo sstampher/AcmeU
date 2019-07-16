@@ -1,6 +1,5 @@
 import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT } from './constants';
 import Axios from 'axios';
-import { runInNewContext } from 'vm';
 
 const _createStudent = ( student ) => ({
     type: NEW_STUDENT,
@@ -19,10 +18,8 @@ const _deleteStudent = ( response ) => ({
 
 export const deleteStudent = ( id ) => async dispatch => {
     try{
-        console.log('in the delete thunk id passed over:', id )
         const api = await Axios.delete( `/api/students/${id}`);
         const response = api.data;
-        console.log('in the delete thunk response from axios:', response )
         dispatch( _deleteStudent( response ));
     }
     catch(err){

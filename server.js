@@ -12,7 +12,6 @@ app.use(express.json());
 app.use('/dist', express.static(path.join(__dirname, 'dist')))
 app.use(express.static(path.join(__dirname, './public')))
 
-
 app.get('/api/schools', async (req, res, next) => {
   try{
     res.json(await School.findAll());
@@ -49,7 +48,6 @@ app.post('/api/students', async (req, res, next) => {
 app.put('/api/students/:id', async (req, res, next) => {
   try{
     const result = await Student.update( { schoolId: req.body.updateInfo.schoolId }, { where: {id:req.params.id}, returning: true} )
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>', result)
     res.json(result[1][0])
   }
   catch(err){
@@ -70,6 +68,7 @@ app.delete('/api/students/:id', async (req, res, next) => {
 app.get('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 })
+
 const port = 3001;
 
 app.listen(port, () => `Server running on port ${port}`);
