@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AddStudent from './AddStudent';
 
@@ -6,7 +7,7 @@ function Schools ( props ) {
         
         return <div>
                     < AddStudent />
-                    {props.schools.map( item => <li key={item.id}>{item.name + ' ' + 'student count: ' + props.studentCount(item.name)}</li>)}
+                    {props.schools.map( item => <li key={item.id}>< Link to = {`/schools/${item.id}`}> {item.name} </Link>{ 'student count: ' + props.studentCount(item.name)}</li>)}
                </div>
     }
 
