@@ -17,7 +17,6 @@ const mapStateToProps = state => ({
         let targetSchool = state.data.schools.find(school => school.name === schoolName)
         let count = state.data.students.reduce( (acc, item) => {
             if(item.schoolId === targetSchool.id){
-                console.log('yes');
                 acc += 1;
             }
             return acc;
@@ -26,4 +25,4 @@ const mapStateToProps = state => ({
     }
 })
 
-export default connect( mapStateToProps )(Schools)
+export default connect( mapStateToProps )( Schools )

@@ -26,8 +26,6 @@ import { updateStudent } from '../store/actions/actions';
     }
 
     render(){
-
-        console.log('props sent to select box component', this.props)
         
         return  <form onSubmit={this.handleSubmit}>
                         
@@ -58,10 +56,6 @@ const mapStateToProps = state => ({
             return name;
         }
         return 'Not Enrolled';
-    },
-    idCalculator: function(schoolName){
-        let targetSchool = state.data.schools.find(item => item.name === schoolName);
-        console.log(targetSchool)
     }
 })
 

@@ -11,12 +11,13 @@ class Nav extends Component {
     }
     
     render(){
+
         
         return (
             <div>
                     < Link to = '/schools'> Schools ({this.props.schools.length})</Link>
                     < Link to = '/students'> Students ({this.props.students.length})</Link>
-                    < Link to = '/most_popular'> Most Popular ()</Link>
+                    < Link to = '/most_popular'> Most Popular:  ({this.props.mostPopularSchoolValue()})</Link>
                     < Link to = '/top_school'> Top School ()</Link>
             </div>
         )
@@ -27,8 +28,29 @@ class Nav extends Component {
 const mapStateToProps = state => ({
     schools: state.data.schools,
     students: state.data.students,
-    student: state.data.student,
-    mostPopular: state.data.students
+    mostPopularSchoolValue: function(){
+
+        const countObject = state.data.students.reduce((acc, student) => {
+            !acc[student.schoolId] ? acc[student.schoolId] = 1 : acc[student.schoolId] += 1;
+            console.log(acc);
+            return acc;
+        }, {})
+
+        const mostPopularValue = Object.values(countObject).reduce( (acc, item, idx) => {
+            if( item > acc ){
+                acc = item;
+            }
+
+            return acc;
+        },0)
+
+        return mostPopularValue;
+
+        
+
+
+
+    }
 })
 
 const mapDispatchToProps = (dispatch) => {
