@@ -1,4 +1,4 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS} from '../actions/constants';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT } from '../actions/constants';
 
 const initialState = {
     students: [],
@@ -24,6 +24,17 @@ export default function ( state = initialState, action ) {
                 ...state,
                 student: action.payload,
                 students: [...state.students, action.payload]
+            }
+        case UPDATE_STUDENT :
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>inside update student reducer payload:', action.payload)
+            return  {
+                ...state,
+                students: [...state.students.map(student => {
+                    if(student.id === action.payload.id){
+                        return action.payload
+                    }
+                    return student
+                })]
             }
 
         default:

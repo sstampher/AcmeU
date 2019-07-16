@@ -6,16 +6,17 @@ const _createStudent = (student) => ({
     payload: student
   });
 
-const _updateStudent = (updatedStudent) => ({
+const _updateStudent = ( response ) => ({
     type: UPDATE_STUDENT,
-    payload: updatedStudent
+    payload: response
 });
 
-export const updateStudent = ( updateInfo ) => async dispatch => { // updateInfo: needs schoolId and student id, updateInfo is an object
+export const updateStudent = ( updateInfo ) => async dispatch => {
     try {
-        console.log('in update student thunk')
+        console.log('in update student thunk >>>>>>>>updateInfo', updateInfo)
         const api = await Axios.put( `/api/students/${updateInfo.studentId}`, { updateInfo } );
         const response = api.data;
+        console.log('in update student thunk >>>>>>>>>response', response)
         dispatch( _updateStudent( response ) );
 
     }

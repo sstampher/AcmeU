@@ -7,7 +7,7 @@ function Students( props ){
         
         return <div>
                     < AddStudent />
-                    {props.students.map( item => <li key={item.id}>{item.firstName + ' ' + item.lastName}< UpdateStudent defaultSchoolId = {item.schoolId} /></li>)}
+                    {props.students.map( item => <li key={item.id}>{item.firstName + ' ' + item.lastName}< UpdateStudent defaultSchoolId = {item.schoolId} defaultStudentId = {item.id} /></li>)}
 
                </div>
 

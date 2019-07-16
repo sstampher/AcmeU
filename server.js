@@ -48,10 +48,9 @@ app.post('/api/students', async (req, res, next) => {
 
 app.put('/api/students/:id', async (req, res, next) => {
   try{
-    console.log('inside server put request')
-    const updatedStudent = await Student.update({ schoolId: req.body.updateInfo.schoolId }, { where: { id: req.params.id } })
-
-    res.json( updatedStudent )
+    const result = await Student.update( { schoolId: req.body.updateInfo.schoolId }, { where: {id:req.params.id}, returning: true} )
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>', result)
+    res.json(result[1][0])
   }
   catch(err){
     next(err);
