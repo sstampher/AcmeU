@@ -1,4 +1,4 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT } from '../actions/constants';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT } from '../actions/constants';
 
 const initialState = {
     students: [],
@@ -9,24 +9,23 @@ const initialState = {
 export default function ( state = initialState, action ) {
     switch(action.type){
         
-        case FETCH_SCHOOLS :
+        case FETCH_SCHOOLS:
             return {
                 ...state,
                 schools: action.payload
             }
-        case FETCH_STUDENTS :
+        case FETCH_STUDENTS:
             return {
                 ...state,
                 students: action.payload
             }
-        case NEW_STUDENT :
+        case NEW_STUDENT:
             return  {
                 ...state,
                 student: action.payload,
                 students: [...state.students, action.payload]
             }
-        case UPDATE_STUDENT :
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>inside update student reducer payload:', action.payload)
+        case UPDATE_STUDENT:
             return  {
                 ...state,
                 students: [...state.students.map(student => {
@@ -35,6 +34,12 @@ export default function ( state = initialState, action ) {
                     }
                     return student
                 })]
+            }
+        case DELETE_STUDENT:
+            console.log('in delete student reducer action.payload:', action.payload)
+            return {
+                ...state,
+                students: [...state.students.filter(student => student.id !== action.payload)]
             }
 
         default:

@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
             return acc;
         }, {})
 
-        const mostPopularValue = Object.values(countObject).reduce( (acc, item, idx) => {
+        const mostPopularValue = Object.values(countObject).reduce( (acc, item) => {
             if( item > acc ){
                 acc = item;
             }
@@ -46,14 +46,10 @@ const mapStateToProps = state => ({
 
         return mostPopularValue;
 
-        
-
-
-
     }
 })
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = ( dispatch ) => {
     return {
         fetchData: () => {
             dispatch(fetchSchools()),
@@ -62,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )(Nav)
+export default connect( mapStateToProps, mapDispatchToProps )( Nav )

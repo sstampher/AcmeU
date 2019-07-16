@@ -1,7 +1,8 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT } from './constants';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT } from './constants';
 import Axios from 'axios';
+import { runInNewContext } from 'vm';
 
-const _createStudent = (student) => ({
+const _createStudent = ( student ) => ({
     type: NEW_STUDENT,
     payload: student
   });
@@ -11,14 +12,29 @@ const _updateStudent = ( response ) => ({
     payload: response
 });
 
+const _deleteStudent = ( response ) => ({
+    type: DELETE_STUDENT,
+    payload: response
+});
+
+export const deleteStudent = ( id ) => async dispatch => {
+    try{
+        console.log('in the delete thunk id passed over:', id )
+        const api = await Axios.delete( `/api/students/${id}`);
+        const response = api.data;
+        console.log('in the delete thunk response from axios:', response )
+        dispatch( _deleteStudent( response ));
+    }
+    catch(err){
+        console.log('there was an error in deleteStudent')
+    }
+}
+
 export const updateStudent = ( updateInfo ) => async dispatch => {
     try {
-        console.log('in update student thunk >>>>>>>>updateInfo', updateInfo)
         const api = await Axios.put( `/api/students/${updateInfo.studentId}`, { updateInfo } );
         const response = api.data;
-        console.log('in update student thunk >>>>>>>>>response', response)
         dispatch( _updateStudent( response ) );
-
     }
     catch(err){
         console.log('there was an error in updateStudent')
@@ -26,18 +42,17 @@ export const updateStudent = ( updateInfo ) => async dispatch => {
 }
 
 export const fetchSchools = () => async dispatch => {
-        try{
-            const api = await Axios.get('/api/schools');
-            const response = api.data;
-            dispatch({
-                type: FETCH_SCHOOLS ,
-                payload: response
-            })
-        }
-        catch(err){
-            console.log('there was an error');
-        }
-    
+    try{
+        const api = await Axios.get('/api/schools');
+        const response = api.data;
+        dispatch({
+            type: FETCH_SCHOOLS ,
+            payload: response
+        })
+    }
+    catch(err){
+        console.log('there was an error in fetchSchools');
+    }  
 }
 
 export const fetchStudents = () => async dispatch => {
@@ -50,7 +65,7 @@ export const fetchStudents = () => async dispatch => {
            })
        }
        catch(err){
-           console.log('there was an error');
+           console.log('there was an error in fetchStudents');
        }
    
 }
@@ -59,7 +74,6 @@ export const createStudent = (studentData) => async dispatch => {
        try{
            const student = await Axios.post('/api/students', { studentData });
            const response = student.data;
-           console.log('response from axios post request', response)
            dispatch(_createStudent(response))
        }
        catch(err){

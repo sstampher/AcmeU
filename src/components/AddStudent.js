@@ -52,11 +52,11 @@ import { createStudent } from '../store/actions/actions';
                     <input type = 'text' name = 'gpa' value = {this.state.gpa} onChange = {this.handleChange}/><br/>
                     <label>Enroll at: </label>
                     <input type = 'select' name = 'SchoolId' value = {this.state.SchoolId} onChange = {this.handleChange}/><br/>
-                    <button type = 'submit'>Submit</button>
+                    <button type = 'submit'>Create Student</button>
                </form>
     }
 
 }
 
 
-export default connect( null, { createStudent } )(AddStudent)
+export default connect( null, { createStudent } )( AddStudent )

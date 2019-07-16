@@ -57,6 +57,16 @@ app.put('/api/students/:id', async (req, res, next) => {
   }
 })
 
+app.delete('/api/students/:id', async (req, res, next) => {
+  try{
+    await Student.destroy( { where: { id: req.params.id } } )
+    res.send(req.params.id)
+  }
+  catch(err){
+    next(err)
+  }
+})
+
 app.get('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 })
