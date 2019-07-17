@@ -11,7 +11,7 @@ import { createStudent } from '../store/actions/actions';
             lastName: '',
             email: '',
             gpa: '',
-            SchoolId: ''
+            schoolId: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,7 +27,7 @@ import { createStudent } from '../store/actions/actions';
             lastName: '',
             email: '',
             gpa: '',
-            SchoolId: ''
+            schoolId: ''
         });
     }
 
@@ -40,6 +40,8 @@ import { createStudent } from '../store/actions/actions';
     }
 
     render(){
+
+        console.log('state in component', this.state)
         
         return <form onSubmit = {this.handleSubmit}>
                     <label>First Name: </label>
@@ -50,13 +52,21 @@ import { createStudent } from '../store/actions/actions';
                     <input type = 'text' name = 'email' value = {this.state.email} onChange = {this.handleChange}/><br/>
                     <label>GPA: </label>
                     <input type = 'text' name = 'gpa' value = {this.state.gpa} onChange = {this.handleChange}/><br/>
-                    <label>Enroll at: </label>
-                    <input type = 'select' name = 'SchoolId' value = {this.state.SchoolId} onChange = {this.handleChange}/><br/>
+                    <label>Enroll at: 
+                        <select name = 'schoolId' onChange = {this.handleChange}>
+                            { this.props.schools.map( school => <option value={school.id}>{school.name}</option> ) }
+                        </select>
+                    </label>
+                    <input type="submit"/>
                     <button type = 'submit'>Create Student</button>
                </form>
     }
 
 }
 
+const mapStateToProps =  state  => ({
+    schools: state.data.schools
+})
 
-export default connect( null, { createStudent } )( AddStudent )
+
+export default connect( mapStateToProps, { createStudent } )( AddStudent )

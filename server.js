@@ -36,7 +36,8 @@ app.post('/api/students', async (req, res, next) => {
       firstName: req.body.studentData.firstName,
       lastName: req.body.studentData.lastName,
       gpa: req.body.studentData.gpa,
-      email: req.body.studentData.email
+      email: req.body.studentData.email,
+      schoolId: req.body.studentData.schoolId
     });
     res.json(newStudent);
   }

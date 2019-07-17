@@ -67,8 +67,9 @@ export const fetchStudents = () => async dispatch => {
    
 }
 
-export const createStudent = (studentData) => async dispatch => {
+export const createStudent = ( studentData ) => async dispatch => {
        try{
+           console.log('data sent to thunk:', studentData)
            const student = await Axios.post('/api/students', { studentData });
            const response = student.data;
            dispatch(_createStudent(response))
