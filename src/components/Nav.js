@@ -17,7 +17,7 @@ class Nav extends Component {
             <div>
                     < Link to = '/schools'> Schools ({this.props.schools.length})</Link>
                     < Link to = '/students'> Students ({this.props.students.length})</Link>
-                    < Link to = '/most_popular'> Most Popular:  ({this.props.mostPopularSchoolValue()})</Link>
+                    < Link to = {`/schools/${this.props.mostPopularSchoolValue().school}`}> Most Popular:  ({this.props.mostPopularSchoolValue().count})</Link>
                     < Link to = '/top_school'> Top School ()</Link>
             </div>
         )
@@ -31,19 +31,36 @@ const mapStateToProps = state => ({
     mostPopularSchoolValue: function(){
 
         const countObject = state.data.students.reduce((acc, student) => {
-            !acc[student.schoolId] ? acc[student.schoolId] = 1 : acc[student.schoolId] += 1;
-            console.log(acc);
-            return acc;
+
+                !acc[student.schoolId] ? acc[student.schoolId] = { count: 1, schoolId: student.schoolId } : acc[student.schoolId].count += 1;
+                console.log(acc);
+                return acc;
+
+
         }, {})
 
-        const mostPopularValue = Object.values(countObject).reduce( (acc, item) => {
-            if( item > acc ){
-                acc = item;
-            }
+        const mostPopularValue = Object.values(countObject).reduce( ( acc ) => {
+            
+            Object.values(countObject).reduce( ( count, students ) => {
+                if( students.count > count ) {
+                    count = students.count
+                }
+
+                acc['school'] = students.schoolId
+                return acc['count'] = count;
+
+            }, 0)
 
             return acc;
-        },0)
 
+        }, {})
+
+        let schoolName = state.data.schools.find( school => school.id === mostPopularValue.school );
+        console.log(schoolName);
+        
+        schoolName ? mostPopularValue.schoolName = schoolName.name : 'loading...';
+
+        console.log('mpv', mostPopularValue);
         return mostPopularValue;
 
     }
