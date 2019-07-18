@@ -12,12 +12,15 @@ class Nav extends Component {
     
     render(){
 
+        console.log(this.props.topSchool());
+
         return (
             <div id="nav">
+                    < Link to = '/'> Acme Schools</Link>
                     < Link to = '/schools'> Schools ({this.props.schools.length})</Link>
                     < Link to = '/students'> Students ({this.props.students.length})</Link>
                     < Link to = {`/schools/${this.props.mostPopularSchoolValue('id')}`}> Most Popular: {this.props.mostPopularSchoolValue('name')} ({this.props.mostPopularSchoolValue('count')})</Link>
-                    < Link to = '/top_school'> Top School ()</Link>
+                    < Link to = {`/schools/${this.props.topSchool('id')}`}> Top School: {this.props.topSchool('name')} ({this.props.topSchool('count')})</Link>
             </div>
         )
     }
@@ -34,8 +37,6 @@ const mapStateToProps = state => ({
                 return acc;
         }, {})
 
-        console.log("object with counts", countObject);
-
         const mostPopularValue = Object.values(countObject).reduce( (acc, item) => {
             if(item.count > acc) {
                 acc = item.count
@@ -50,8 +51,6 @@ const mapStateToProps = state => ({
         const targetSchoolId = Object.values(countObject).find( item => item.count === mostPopularValue);
         const id = targetSchoolId ? targetSchoolId.schoolId : 'loading' ;
 
-        console.log('idddd', id)
-
         if (request === 'id'){
             return id;
         }
@@ -64,25 +63,40 @@ const mapStateToProps = state => ({
 
     },
 
-    mostPopularSchoolId: function(){
+    topSchool: function( request ){
 
         const countObject = state.data.students.reduce((acc, student) => {
-            !acc[student.schoolId] ? acc[student.schoolId] = { count: 1, schoolId: student.schoolId } : acc[student.schoolId].count += 1;
+            !acc[student.schoolId] ? acc[student.schoolId] = { count: 1, schoolId: student.schoolId, totalgpa: null, average: 0 } : acc[student.schoolId].count += 1, acc[student.schoolId].totalgpa += Number(student.gpa) ;
             return acc;
          }, {})
 
-         console.log("object with counts", countObject);
+         console.log("topschool", countObject);
 
-         const mostPopularValue = Object.values(countObject).reduce( (acc, item) => {
-            if(item.count > acc) {
-            acc = item.count
-         }
-             return acc;
-             }, 0)
+        const combine = Object.values(countObject).map( item => item.average = item.totalgpa/item.count );
+        const highest = combine.reduce((acc, item) => {if(item > acc){ acc=item } return acc},0)
 
-        const targetSchoolId = Object.values(countObject).find( item => item.count === mostPopularValue);
-        const id = targetSchoolId ? targetSchoolId.schoolId : 'loading' ;
-        return id;
+        if (request === 'highest'){
+            return highest;
+        }
+        
+        const popularSchoolId = Object.values(countObject).find( item => item.average === highest );
+        const id = popularSchoolId ? popularSchoolId.schoolId : 'loading';
+        
+        if (request === 'id'){
+            return id;
+        }
+
+        if (request === 'name'){
+            const popularSchoolId = Object.values(countObject).find( item => item.average === highest );
+            const _name = popularSchoolId ? state.data.schools.find( school => popularSchoolId.schoolId === school.id) : 'loading' ;
+            return _name.name;
+        }
+
+        if (request === 'count'){
+            const popularSchoolId = Object.values(countObject).find( item => item.average === highest );
+            const count = popularSchoolId ? popularSchoolId.count : 'loading';
+            return count;
+        }
     } 
 })
 
