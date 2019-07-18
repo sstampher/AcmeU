@@ -42,7 +42,7 @@ app.post('/api/students', async (req, res, next) => {
     res.json(newStudent);
   }
   catch(err){
-    next(err);
+    res.status(500).send(err.errors.map( error => error.message ));
   }
 });
 

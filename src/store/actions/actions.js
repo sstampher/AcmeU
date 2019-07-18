@@ -1,4 +1,4 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT } from './constants';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT, ERRORS } from './constants';
 import Axios from 'axios';
 
 const _createStudent = ( student ) => ({
@@ -13,6 +13,11 @@ const _updateStudent = ( response ) => ({
 
 const _deleteStudent = ( response ) => ({
     type: DELETE_STUDENT,
+    payload: response
+});
+
+const errors = ( response ) => ({
+    type: ERRORS,
     payload: response
 });
 
@@ -75,7 +80,8 @@ export const createStudent = ( studentData ) => async dispatch => {
            dispatch(_createStudent(response))
        }
        catch(err){
-           console.log('there was an error');
+           console.log(err.response.data);
+           dispatch(errors(err.response.data))
        }
    
 }

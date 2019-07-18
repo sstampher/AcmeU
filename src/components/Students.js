@@ -7,14 +7,16 @@ import { deleteStudent } from '../store/actions/actions';
 function Students( props ){
         
         return <div>
+
                     < AddStudent />
-                    {props.students.map( item => <li key={item.id}>{item.firstName + ' ' + item.lastName}< UpdateStudent defaultSchoolId = {item.schoolId} defaultStudentId = {item.id} />
+                    <div id="element">
+                    {props.students.map( item => <li id="elementContainer" key={item.id}>{item.firstName + ' ' + item.lastName}< UpdateStudent defaultSchoolId = {item.schoolId} defaultStudentId = {item.id} />
                     < button onClick = {() => props.deleteStudent(item.id)} >Delete</button></li>)}
+                    </div>
 
                </div>
 
 }
-
 
 const mapStateToProps = state => ({
     students: state.data.students,

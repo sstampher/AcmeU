@@ -41,31 +41,34 @@ import { createStudent } from '../store/actions/actions';
 
     render(){
 
-        console.log('state in component', this.state)
+        console.log('state in component', this.props.errors)
         
-        return <form onSubmit = {this.handleSubmit}>
+        return <form class="feedback-input" onSubmit = {this.handleSubmit}>
+        
                     <label>First Name: </label>
-                    <input type = 'text' name = 'firstName' value = {this.state.firstName} onChange = {this.handleChange}/><br/>
+                    <input class="feedback-input" type = 'text' name = 'firstName' value = {this.state.firstName} onChange = {this.handleChange}/><br/>
                     <label>Last Name: </label>
-                    <input type = 'text' name = 'lastName' value = {this.state.lastName} onChange = {this.handleChange}/><br/>
+                    <input class="feedback-input" type = 'text' name = 'lastName' value = {this.state.lastName} onChange = {this.handleChange}/><br/>
                     <label>Email: </label>
-                    <input type = 'text' name = 'email' value = {this.state.email} onChange = {this.handleChange}/><br/>
+                    <input class="feedback-input" type = 'text' name = 'email' value = {this.state.email} onChange = {this.handleChange}/><br/>
                     <label>GPA: </label>
-                    <input type = 'text' name = 'gpa' value = {this.state.gpa} onChange = {this.handleChange}/><br/>
+                    <input class="feedback-input" type = 'text' name = 'gpa' value = {this.state.gpa} onChange = {this.handleChange}/><br/>
                     <label>Enroll at: 
                         <select name = 'schoolId' onChange = {this.handleChange}>
+                            <option>Choose a school</option>
                             { this.props.schools.map( school => <option value={school.id}>{school.name}</option> ) }
                         </select>
                     </label>
-                    <input type="submit"/>
                     <button type = 'submit'>Create Student</button>
+                    <div id="error">{this.props.errors ? this.props.errors.map(error => <p id="errors">{error}</p>) : ''}</div>
                </form>
     }
 
 }
 
 const mapStateToProps =  state  => ({
-    schools: state.data.schools
+    schools: state.data.schools,
+    errors: state.data.errors
 })
 
 

@@ -1,8 +1,9 @@
-import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT } from '../actions/constants';
+import { FETCH_SCHOOLS , NEW_STUDENT, FETCH_STUDENTS, UPDATE_STUDENT, DELETE_STUDENT, ERRORS } from '../actions/constants';
 
 const initialState = {
     students: [],
     schools: [], 
+    errors: []
 }
 
 export default function ( state = initialState, action ) {
@@ -37,6 +38,12 @@ export default function ( state = initialState, action ) {
             return {
                 ...state,
                 students: [...state.students.filter(student => student.id !== action.payload)]
+            }
+
+        case ERRORS:
+            return {
+                ...state,
+                errors: action.payload
             }
 
         default:

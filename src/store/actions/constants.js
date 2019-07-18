@@ -3,3 +3,4 @@ export const FETCH_STUDENTS = 'FETCH_STUDENTS';
 export const NEW_STUDENT = 'NEW_STUDENT';
 export const UPDATE_STUDENT = 'UPDATE_STUDENT';
 export const DELETE_STUDENT = 'DELETE_STUDENT';
+export const ERRORS = 'ERRORS';
