@@ -1,36 +1,33 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
-import { fetchSchools } from '../store/actions/actions';
-import { fetchStudents } from '../store/actions/actions';
+import { Link } from 'react-router-dom';
 
-class Nav extends Component {
-    
-    componentDidMount(){
-        this.props.fetchData();
-    }
-    
-    render(){
+function Home ( props ) {
 
-        return (
-            <div id="nav">
-                    < Link to = '/home'> Acme Schools</Link>
-                    < Link to = '/schools'> Schools ({this.props.schools.length})</Link>
-                    < Link to = '/students'> Students ({this.props.students.length})</Link>
-                    < Link to = {`/schools/${this.props.mostPopularSchoolValue('id')}`}> Most Popular: {this.props.mostPopularSchoolValue('name')} ({this.props.mostPopularSchoolValue('count')})</Link>
-                    < Link to = {`/schools/${this.props.topSchool('id')}`}> Top School: {this.props.topSchool('name')} ({this.props.topSchool('count')})</Link>
-            </div>
-        )
-    }
+    return <div id="home">
+                <h4>Welcome to Acme Schools!</h4>
+
+                <h4>The most popular school is < Link to = {`/schools/${props.mostPopularSchoolValue('id')}`}>{props.mostPopularSchoolValue('name')}</Link> with {props.mostPopularSchoolValue('count')} students enrolled!</h4>
+
+                <h4>The top school is < Link to = {`/schools/${props.topSchool('id')}`}>{props.topSchool('name')}</Link> with an average gpa of {props.topSchool('highest')}!</h4>
+           </div>
 
 }
 
+
+
+
+
+
+
 const mapStateToProps = state => ({
+
     schools: state.data.schools,
     students: state.data.students,
+
     mostPopularSchoolValue: function( request ){
 
-        const countObject = state.data.students.reduce( (acc, student) => {
+        const countObject = state.data.students.reduce((acc, student) => {
                 !acc[student.schoolId] ? acc[student.schoolId] = { count: 1, schoolId: student.schoolId } : acc[student.schoolId].count += 1;
                 return acc;
         }, {})
@@ -66,7 +63,9 @@ const mapStateToProps = state => ({
         const countObject = state.data.students.reduce((acc, student) => {
             !acc[student.schoolId] ? acc[student.schoolId] = { count: 1, schoolId: student.schoolId, totalgpa: null, average: 0 } : acc[student.schoolId].count += 1, acc[student.schoolId].totalgpa += Number(student.gpa) ;
             return acc;
-        }, {})
+         }, {})
+
+         console.log("topschool", countObject);
 
         const combine = Object.values(countObject).map( item => item.average = item.totalgpa/item.count );
         const highest = combine.reduce((acc, item) => {if(item > acc){ acc=item } return acc},0)
@@ -96,13 +95,4 @@ const mapStateToProps = state => ({
     } 
 })
 
-const mapDispatchToProps = ( dispatch ) => {
-    return {
-        fetchData: () => {
-            dispatch(fetchSchools()),
-            dispatch(fetchStudents())
-        }
-    }
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )( Nav )
+export default connect( mapStateToProps )( Home )
