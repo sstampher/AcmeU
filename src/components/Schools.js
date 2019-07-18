@@ -8,7 +8,7 @@ function Schools ( props ) {
         return <div>
                     < AddStudent />
                     <div id="element">
-                        {props.schools.map( item => <li key={item.id}>< Link to = {`/schools/${item.id}`}> {item.name} </Link><br/>{ 'student count: ' + props.studentCount(item.name)}<img src={item.url}></img></li>)}
+                        {props.schools.map( item => <li key={item.id}>< Link to = {`/schools/${item.id}`}> {item.name} </Link><br/>{ 'student count: ' + props.studentCount(item.name)}<br/><img src={item.url}></img></li>)}
                     </div>
                </div>
     }

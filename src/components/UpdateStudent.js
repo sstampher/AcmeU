@@ -32,10 +32,9 @@ import { updateStudent } from '../store/actions/actions';
                         <select onChange = {this.handleChange}>
                             <option>{this.props.school(this.props.defaultSchoolId)}</option>
                         {this.props.schools.map(
-                            school => <option value={school.id}>{school.name}</option>)}
-                        
+                            school => <option key={school.id} value={school.id}>{school.name}</option>)}
                         </select>
-                        
+                        <br />
                         <button type = 'submit'>Enroll</button>
 
                </form>

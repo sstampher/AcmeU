@@ -14,12 +14,6 @@ function Home ( props ) {
 
 }
 
-
-
-
-
-
-
 const mapStateToProps = state => ({
 
     schools: state.data.schools,
@@ -64,8 +58,6 @@ const mapStateToProps = state => ({
             !acc[student.schoolId] ? acc[student.schoolId] = { count: 1, schoolId: student.schoolId, totalgpa: null, average: 0 } : acc[student.schoolId].count += 1, acc[student.schoolId].totalgpa += Number(student.gpa) ;
             return acc;
          }, {})
-
-         console.log("topschool", countObject);
 
         const combine = Object.values(countObject).map( item => item.average = item.totalgpa/item.count );
         const highest = combine.reduce((acc, item) => {if(item > acc){ acc=item } return acc},0)

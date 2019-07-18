@@ -10,7 +10,11 @@ function Students( props ){
 
                     < AddStudent />
                     <div id="element">
-                    {props.students.map( item => <li id="elementContainer" key={item.id}>{item.firstName + ' ' + item.lastName}< UpdateStudent defaultSchoolId = {item.schoolId} defaultStudentId = {item.id} />
+                    {props.students.map( item => <li id="elementContainer" key={item.id}>{item.firstName + ' ' + item.lastName}
+                    <br/>
+                    GPA : {item.gpa}
+                    <br/>
+                    <img src={props.idToImage(item.schoolId)}/>< UpdateStudent defaultSchoolId = {item.schoolId} defaultStudentId = {item.id} />
                     < button onClick = {() => props.deleteStudent(item.id)} >Delete</button></li>)}
                     </div>
 
@@ -20,7 +24,13 @@ function Students( props ){
 
 const mapStateToProps = state => ({
     students: state.data.students,
-    student: state.data.student
+    schools: state.data.schools,
+    student: state.data.student,
+    idToImage: function(id){
+        let school = state.data.schools.find(item => item.id===id);
+        let image = school ? school.url : '';
+        return image
+    }
 })
 
 export default connect( mapStateToProps, { deleteStudent } )(Students)

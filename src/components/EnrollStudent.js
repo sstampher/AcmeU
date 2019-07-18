@@ -32,7 +32,7 @@ import { updateStudent } from '../store/actions/actions';
                         <select onChange = {this.handleChange}>
                             <option>Select a Student to Enroll</option>
                         {this.props.students.map(
-                            student => <option value={student.id}>{student.firstName + ' ' + student.lastName}</option>)}
+                            student => <option key = {student.id} value={student.id}>{student.firstName + ' ' + student.lastName}</option>)}
                         
                         </select>
                         
